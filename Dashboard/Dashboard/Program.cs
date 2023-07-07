@@ -1,3 +1,9 @@
+using Dashboard.Data;
+using Dashboard.Data.Entities;
+using Dashboard.Interfaces;
+using Dashboard.Repositories;
+using Microsoft.EntityFrameworkCore;
+
 namespace Dashboard
 {
     public class Program
@@ -8,7 +14,13 @@ namespace Dashboard
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
-
+            builder.Services.AddDbContext<AppDbContext>(options => {
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+            });
+            builder.Services.AddScoped<IRepository<Order>, EntityRepository<Order>>();
+            builder.Services.AddScoped<IRepository<Product>, EntityRepository<Product>>();
+            builder.Services.AddScoped<IRepository<User>, EntityRepository<User>>();
+            builder.Services.AddCloudscribePagination();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

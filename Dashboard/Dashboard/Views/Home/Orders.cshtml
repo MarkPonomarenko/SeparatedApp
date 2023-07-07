@@ -1,0 +1,45 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="card-body">
+                @{
+                    <table id="userGrid" class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Money Spent</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th width="60px" scope="row">1</th>
+                                <td>1</td>
+                                <td>1</td>
+                                <td width="120px">
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#categoryUpdateModal"><i class="fas fa-edit"></i></button>
+                                </td>
+                            </tr>
+                            <form asp-action="UpdateCategory" asp-controller="Home" method="post">
+                                <div id="categoryUpdateModal" class="modal" tabindex="-1" role="dialog">
+                                </div>
+                            </form>
+                        </tbody>
+                    </table>
+                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#categoryCreateModal">Add new category</button>
+                    <form asp-action="CreateCategory" asp-controller="Home" method="post">
+                        <div id="categoryCreateModal" class="modal" tabindex="-1" role="dialog">
+                        </div>
+                    </form>
+                }
+            </div>
+        </div>
+    </div>
+</div>

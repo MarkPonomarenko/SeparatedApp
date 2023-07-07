@@ -1,0 +1,13 @@
+﻿@using Dashboard.Models;
+@model CreateProductModel
+@{
+    ViewData["Title"] = "Create Expense";
+    ViewData["Controller"] = "Home";
+    ViewData["Action"] = "UpdateProduct";
+}
+
+<form method="post" asp-action="UpdateProduct" asp-controller="Home">
+    <div>
+        <partial name="_ProductPartial" model="Model" view-data="ViewData" />
+    </div>
+</form>
