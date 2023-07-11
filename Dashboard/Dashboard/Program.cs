@@ -1,7 +1,7 @@
-using Dashboard.Data;
-using Dashboard.Data.Entities;
-using Dashboard.Interfaces;
-using Dashboard.Repositories;
+using Shared.Repositories;
+using Shared.Data;
+using Shared.Data.Entities;
+using Shared.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace Dashboard

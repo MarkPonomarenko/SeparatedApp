@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
-namespace Dashboard.Interfaces
+﻿namespace Shared.Interfaces
 {
     public interface IBaseEntity
     {

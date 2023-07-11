@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-using Dashboard.Interfaces;
+using Shared.Interfaces;
 
-namespace Dashboard.Data.Entities
+namespace Shared.Data.Entities
 {
     public class Category : IBaseEntity
     {

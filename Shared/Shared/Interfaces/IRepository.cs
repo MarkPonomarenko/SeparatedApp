@@ -1,4 +1,4 @@
-﻿namespace Dashboard.Interfaces
+﻿namespace Shared.Interfaces
 {
     public interface IRepository<TEntity> where TEntity : class, IBaseEntity
     {

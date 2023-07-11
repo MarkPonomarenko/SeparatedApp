@@ -1,4 +1,4 @@
-﻿using Dashboard.Data.Entities;
+﻿using Shared.Data.Entities;
 
 namespace Dashboard.Models
 {

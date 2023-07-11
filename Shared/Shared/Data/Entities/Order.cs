@@ -1,7 +1,7 @@
-﻿using Dashboard.Interfaces;
+﻿using Shared.Interfaces;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Dashboard.Data.Entities
+namespace Shared.Data.Entities
 {
     public class Order : IBaseEntity
     {

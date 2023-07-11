@@ -1,8 +1,8 @@
-﻿using Dashboard.Interfaces;
-using Dashboard.Utils;
+﻿using Shared.Interfaces;
+using Shared.Utils;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Dashboard.Data.Entities
+namespace Shared.Data.Entities
 {
     public class User : IBaseEntity
     {

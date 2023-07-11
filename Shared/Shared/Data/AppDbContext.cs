@@ -1,7 +1,7 @@
-﻿using Dashboard.Data.Entities;
+﻿using Shared.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace Dashboard.Data
+namespace Shared.Data
 {
     public class AppDbContext : DbContext
     {

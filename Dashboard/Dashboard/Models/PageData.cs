@@ -1,5 +1,5 @@
 ﻿using cloudscribe.Pagination.Models;
-using Dashboard.Interfaces;
+using Shared.Interfaces;
 
 namespace Dashboard.Models
 {

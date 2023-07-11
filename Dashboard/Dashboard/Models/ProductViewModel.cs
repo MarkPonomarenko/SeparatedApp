@@ -1,4 +1,4 @@
-﻿using Dashboard.Interfaces;
+﻿using Shared.Interfaces;
 
 namespace Dashboard.Models
 {
