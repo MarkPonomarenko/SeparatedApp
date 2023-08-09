@@ -7,6 +7,8 @@ namespace Dashboard.Models
         public Guid Id { get; set; }
         public DateTime Created { get; set; }
         public Guid ProductId { get; set; }
+        public bool State { get; set; }
+        public int Quantity { get; set; }
         public Guid UserId { get; set; }
     }
 }

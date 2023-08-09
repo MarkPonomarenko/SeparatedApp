@@ -1,9 +1,8 @@
-﻿using Dashboard.Data.Entities;
-using Dashboard.Interfaces;
+﻿using Shared.Data.Entities;
+using Shared.Interfaces;
 using Dashboard.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
 using System.Diagnostics;
 
 namespace Dashboard.Controllers
@@ -12,15 +11,17 @@ namespace Dashboard.Controllers
     {
         private readonly IRepository<Order> _orderRepository;
         private readonly IRepository<Product> _productRepository;
-        private readonly IRepository<User> _userRepository;
+        private readonly IRepository<Category> _categoryRepository;
+        private readonly IAccountManager _accountManager;
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger, IRepository<Product> productRepository, IRepository<User> userRepository, IRepository<Order> orderRepository)
+        public HomeController(ILogger<HomeController> logger, IRepository<Product> productRepository, IRepository<Order> orderRepository, IAccountManager accountManager, IRepository<Category> categoryRepository)
         {
             _logger = logger;
             _productRepository = productRepository;
-            _userRepository = userRepository;
             _orderRepository = orderRepository;
+            _accountManager = accountManager;
+            _categoryRepository = categoryRepository;
         }
 
         public IActionResult Index()
@@ -62,6 +63,49 @@ namespace Dashboard.Controllers
             return RedirectToAction("Orders");
         }
 
+        public async Task<IActionResult> Categories(int page = 1, int pageSize =5)
+        {
+            List<CategoryViewModel> viewModels = new List<CategoryViewModel>();
+            List<Category> categories = await _categoryRepository.GetAll().ToListAsync();
+            foreach (Category category in categories)
+            {
+                viewModels.Add(new CategoryViewModel()
+                {
+                    Id = category.Id,
+                    TotalMoney = category.SpentMoney,
+                    Name = category.Name
+                });
+            }
+            var data = PageData.GetPage(viewModels, await _categoryRepository.TotalCountOfEntitiesAsync(), page, pageSize);
+            return View(data);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateCategory(CategoryViewModel categoryViewModel)
+        {
+            if(await _categoryRepository.GetAll().FirstOrDefaultAsync(x => x.Name == categoryViewModel.Name) == null)
+            {
+                Category newCategory = new Category()
+                {
+                    Id= Guid.NewGuid(),
+                    Name = categoryViewModel.Name,
+                    SpentMoney = 0
+                };
+                await _categoryRepository.AddAsync(newCategory);
+                await _categoryRepository.SaveChangesAsync();
+            }
+            return RedirectToAction("Categories");
+        }
+
+        public async Task<IActionResult> DeleteCategory(Guid id)
+        {
+            if (await _categoryRepository.DeleteAsync(id))
+            {
+                //add notification
+            }
+            return RedirectToAction("Categories");
+        }
+
         public async Task<IActionResult> Products(int page = 1, int pageSize = 5)
         {
             List<ProductViewModel> viewModels = new List<ProductViewModel>();
@@ -82,10 +126,10 @@ namespace Dashboard.Controllers
             return View(data);
         }
 
-        public async Task<IActionResult> CreateProduct()
+        public IActionResult CreateProduct()
         {
-            List<CreateProductModel> createModels = new List<CreateProductModel>();
-            return View(createModels);
+            CreateProductModel createModel = new CreateProductModel();
+            return View(createModel);
         }
 
         [HttpPost]
@@ -152,19 +196,19 @@ namespace Dashboard.Controllers
         public async Task<IActionResult> Users(int page = 1, int pageSize = 5)
         {
             List<UserViewModel> viewModels = new List<UserViewModel>();
-            List<User> users = await _userRepository.GetAll().ToListAsync();
+            List<User> users = await _accountManager.UserRepositry.GetUsersAsync();
             foreach (User user in users)
             {
                 viewModels.Add(new UserViewModel()
                 {
-                    Id = user.Id,
+                    Id = Guid.Parse(user.Id),
                     Created = user.Created,
                     Money = user.Money,
                     Role = user.Role.ToString(),
-                    Username = user.Username,
+                    Username = user.UserName,
                 });
             }
-            var data = PageData.GetPage(viewModels, await _userRepository.TotalCountOfEntitiesAsync(), page, pageSize);
+            var data = PageData.GetPage(viewModels, await _accountManager.UserRepositry.GetTotalCountOfUsers(), page, pageSize);
             return View(data);
         }
 

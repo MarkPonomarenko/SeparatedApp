@@ -3,6 +3,7 @@ using Shared.Data;
 using Shared.Data.Entities;
 using Shared.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Shared.Utils;
 
 namespace Dashboard
 {
@@ -19,7 +20,9 @@ namespace Dashboard
             });
             builder.Services.AddScoped<IRepository<Order>, EntityRepository<Order>>();
             builder.Services.AddScoped<IRepository<Product>, EntityRepository<Product>>();
-            builder.Services.AddScoped<IRepository<User>, EntityRepository<User>>();
+            builder.Services.AddScoped<IRepository<Category>, EntityRepository<Category>>();
+            builder.Services.AddScoped<IUserRepositry, UserRepository>();
+            builder.Services.AddScoped<IAccountManager, AccountManager>();
             builder.Services.AddCloudscribePagination();
             var app = builder.Build();
 
