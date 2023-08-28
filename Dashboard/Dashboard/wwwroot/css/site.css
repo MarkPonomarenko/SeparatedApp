@@ -11,3 +11,9 @@
         font-size: 3.5rem;
     }
 }
+.child {
+    /*background-color: red;*/
+    width: 1000px;
+    margin-left: 100px;
+    grid:auto;
+}

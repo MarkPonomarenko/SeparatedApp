@@ -126,9 +126,10 @@ namespace Dashboard.Controllers
             return View(data);
         }
 
-        public IActionResult CreateProduct()
+        public async Task<IActionResult> CreateProduct()
         {
             CreateProductModel createModel = new CreateProductModel();
+            createModel.AvailableCategories = await _categoryRepository.GetAll().ToListAsync();
             return View(createModel);
         }
 
